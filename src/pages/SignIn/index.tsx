@@ -8,6 +8,8 @@ import Button from '../../components/Button';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
+import { useAuth } from '../../context/AuthContext';
+
 import { Container, Content, Background, Wrapper, Top } from './styles';
 
 import logoImg from '../../assets/images/logo_extended.svg';
@@ -19,6 +21,8 @@ interface SignInFormData {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+
+  const { signIn } = useAuth();
 
   const handleSubmit = useCallback(
     async ({ email, password }: SignInFormData) => {
@@ -34,14 +38,16 @@ const SignIn: React.FC = () => {
 
         await schema.validate({ email, password }, { abortEarly: false });
 
-        alert('forget');
+        formRef.current?.setErrors({});
+
+        signIn({ email, password });
       } catch (err) {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
       }
     },
-    [],
+    [signIn],
   );
 
   return (
