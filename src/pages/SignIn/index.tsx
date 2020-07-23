@@ -9,6 +9,7 @@ import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 import { Container, Content, Background, Wrapper, Top } from './styles';
 
@@ -23,6 +24,7 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const { signIn } = useAuth();
+  const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async ({ email, password }: SignInFormData) => {
@@ -41,15 +43,28 @@ const SignIn: React.FC = () => {
         formRef.current?.setErrors({});
 
         await signIn({ email, password });
+
+        addToast({
+          title: 'Logado com sucesso!',
+          description: 'Seus dados foram guardados com êxito.',
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
           formRef.current?.setErrors(errors);
+
+          return;
         }
+
+        addToast({
+          title: 'Erro na autenticação!',
+          type: 'error',
+          description: err.response?.data.message,
+        });
       }
     },
-    [signIn],
+    [signIn, addToast],
   );
 
   return (
