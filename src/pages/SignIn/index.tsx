@@ -8,7 +8,7 @@ import Button from '../../components/Button';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/auth';
 
 import { Container, Content, Background, Wrapper, Top } from './styles';
 
@@ -40,11 +40,13 @@ const SignIn: React.FC = () => {
 
         formRef.current?.setErrors({});
 
-        signIn({ email, password });
+        await signIn({ email, password });
       } catch (err) {
-        const errors = getValidationErrors(err);
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
 
-        formRef.current?.setErrors(errors);
+          formRef.current?.setErrors(errors);
+        }
       }
     },
     [signIn],

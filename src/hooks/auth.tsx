@@ -14,6 +14,7 @@ interface SignInCredentials {
 interface IAuthContext {
   user: object;
   signIn(credentials: SignInCredentials): Promise<void>;
+  signOut(): void;
 }
 
 interface IAuthProvider {
@@ -35,22 +36,25 @@ const AuthProvider: React.FC = ({ children }: IAuthProvider) => {
   });
 
   const signIn = useCallback(async ({ email, password }) => {
-    try {
-      const response = await api.post('/sessions', { email, password });
+    const response = await api.post('/sessions', { email, password });
 
-      const { token, user } = response.data;
+    const { token, user } = response.data;
 
-      localStorage.setItem('@Ligeirinho:token', token);
-      localStorage.setItem('@Ligeirinho:user', JSON.stringify(user));
+    localStorage.setItem('@Ligeirinho:token', token);
+    localStorage.setItem('@Ligeirinho:user', JSON.stringify(user));
 
-      setData({ token, user });
-    } catch (err) {
-      console.error(err.response.data);
-    }
+    setData({ token, user });
+  }, []);
+
+  const signOut = useCallback(() => {
+    localStorage.removeItem('@Ligeirinho:token');
+    localStorage.removeItem('@Ligeirinho:user');
+
+    setData({} as AuthState);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
