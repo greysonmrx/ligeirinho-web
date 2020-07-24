@@ -82,6 +82,7 @@ const SignIn: React.FC = () => {
           <Form ref={formRef} onSubmit={handleSubmit}>
             <Input
               name="email"
+              type="email"
               label="Endereço de e-mail"
               placeholder="Insira seu e-mail"
             />

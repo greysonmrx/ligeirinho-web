@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { appearFromLeft } from './animations';
+
 import signInBackgroundImg from '../../assets/images/sign-in-background.jpg';
 
 export const Container = styled.div`
@@ -35,6 +37,7 @@ export const Wrapper = styled.div`
   max-width: 500px;
   width: 80%;
   padding-top: 80px;
+  animation: ${appearFromLeft} 0.8s ease-out;
 
   img {
     height: 40px;
