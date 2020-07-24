@@ -5,96 +5,73 @@ interface TostProps {
   type?: 'success' | 'error' | 'warn' | 'info';
 }
 
-const toastTypeVariations = {
-  info: css`
-    span {
-      background-color: #007bc2;
-    }
-
-    > svg {
-      color: #007bc2;
-    }
-  `,
-  success: css`
-    span {
-      background-color: #21a67a;
-    }
-
-    > svg {
-      color: #21a67a;
-    }
-  `,
-  error: css`
-    span {
-      background-color: #d80026;
-    }
-
-    > svg {
-      color: #d80026;
-    }
-  `,
-  warn: css`
-    span {
-      background-color: #f0a92e;
-    }
-
-    > svg {
-      color: #f0a92e;
-    }
-  `,
+const colors = {
+  info: '#007bc2',
+  warn: '#f0a92e',
+  success: '#21a67a',
+  error: '#d80026',
 };
 
 export const Container = styled(animated.div) <TostProps>`
-  width: fit-content;
+  max-width: 360px;
   display: flex;
-  height: 75px;
   align-items: center;
   position: relative;
-  padding: 10px 15px 10px 10px;
+  padding: 15px 15px 15px 10px;
   border-radius: 8px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
   background-color: #fafafc;
-
-  ${({ type }) => toastTypeVariations[type || 'success']}
+  border-left: 5px solid ${({ type }) => colors[type || 'success']};
 
   & + div {
     margin-top: 8px;
   }
 
-  span {
-    width: 5px;
-    height: 100%;
-    border-radius: 2.5px;
-  }
-
-  > svg {
-    font-size: 26px;
-    margin: 0 12px;
-  }
-
-  div {
-    strong {
-      color: #282c36;
-      font-weight: 600;
-    }
-    p {
-      color: #7f848f;
-      font-size: 15px;
-    }
-  }
-
-  button {
+  > div {
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: transparent;
-    border: none;
-    outline: none;
-    margin-left: 15px;
 
-    svg {
-      font-size: 20px;
-      color: #a9abaf;
+    ${({ type }) => css`
+      span {
+        background-color: ${colors[type || 'success']};
+      }
+
+      > svg {
+        color: ${colors[type || 'success']};
+      }
+    `};
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      border: none;
+      outline: none;
+      margin-left: 15px;
+
+      svg {
+        font-size: 20px;
+        color: #a9abaf;
+      }
+    }
+
+    > svg {
+      font-size: 26px;
+      margin: 0 15px 0 8px;
+    }
+
+    div {
+      flex: 1;
+
+      strong {
+        color: #282c36;
+        font-weight: 600;
+      }
+      p {
+        color: #7f848f;
+        font-size: 15px;
+      }
     }
   }
 `;
