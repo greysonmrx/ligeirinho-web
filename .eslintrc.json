@@ -25,10 +25,14 @@
     "prettier"
   ],
   "rules": {
+    "prettier/prettier": "error",
+    "import/no-duplicates": "off",
+    "default-case": "off",
+    "react/jsx-one-expression-per-line": "off",
     "@typescript-eslint/ban-types": "off",
     "no-unused-expressions": "off",
     "react/jsx-props-no-spreading": "off",
-    "prettier/prettier": "error",
+    "camelcase": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-filename-extension": [
