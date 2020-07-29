@@ -16,7 +16,7 @@ const ToastContainer: React.FC<ToasContainerProps> = ({
 }: ToasContainerProps) => {
   const messagesWithTransitions = useTransition(
     messages,
-    (message) => message.id,
+    message => message.id,
     {
       from: { right: '-120%', opacity: 0 },
       enter: { right: '0%', opacity: 1 },
