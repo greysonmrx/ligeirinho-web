@@ -29,6 +29,7 @@ const AuthProvider: React.FC = ({ children }: IAuthProvider) => {
     const user = localStorage.getItem('@Ligeirinho:user');
 
     if (token && user) {
+      api.defaults.headers.Authorization = `Bearer ${token}`;
       return { token, user: JSON.parse(user) };
     }
 
@@ -42,6 +43,8 @@ const AuthProvider: React.FC = ({ children }: IAuthProvider) => {
 
     localStorage.setItem('@Ligeirinho:token', token);
     localStorage.setItem('@Ligeirinho:user', JSON.stringify(user));
+
+    api.defaults.headers.Authorization = `Bearer ${token}`;
 
     setData({ token, user });
   }, []);
